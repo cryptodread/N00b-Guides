@@ -79,4 +79,57 @@ Part 2: Clone and Build the project locally, and install on EmbassyOS
     embassy-cli package install <service-name>.s9pk
 
 
-You should now be able to log into your EmbassyOS GUI and see your service!
+# You should now be able to log into your EmbassyOS GUI and see your service!
+
+# Now that you know how to install a service, you probably want to know how to actually create one using an existing application. 
+# Here are some notes I took to help explain all the parts that I got stuck on while packaging my first app for the EmbassyOS 0.3.0
+
+# IMPORTANT! Make sure the app you want to wrap has a repo, and you should clone that repo for yourself so you have a stable version to wrap. I cloned mine under the Start9 github account. 
+
+1. Create github repo for wrapper
+    Name it as follows "Start9/[application_name]-wrapper"
+
+2. Create required files for wrapper
+    assets/compat/config_spec.yaml
+    assets/compat/config_rules.yaml
+    docs/instructions.md
+    .gitignore
+    .gitmodules
+    LICENSE
+    Makefile
+    README.md
+    docker_entrypoint.sh
+    icon.png
+    manifest.yaml
+    # you can use the hello-world-wrapper template if you wanna shortcut making these, but you will need to go back into each one and modify them
+
+3. Link the repo of the application you are wrapping as a submodule to your newly created repo.
+    git submodule add [url_to_app_repo]
+    # you should see another folder appear in your repo folder structure with the name of the app @ branch-id (e.g. cwtch @ cbef826 )
+
+4. Edit manifest.yaml to populate the Services Home Page, set the path for config and properties, and set backup and restore settings. 
+    # You can edit manifest.yaml in a few ways 
+    #     a) on github.com using the web UI
+    #     b) vscode using the editor and checking it back in to the repo when finished
+    # If you decide to edit locally and check in, the commands I've used to check in each time are as follows:
+        git init
+        git add . 
+        git commit -m "insert comment here for whatever you changed"
+        git push
+    # A good example of a manifest.yaml is here: https://github.com/Start9Labs/mastodon-wrapper/blob/0.3.0/manifest.yaml
+
+5. Edit the Dockerfile to create the container
+
+6. Edit the Makefile to execute the docker build process
+
+7. Edit the docker_entrypoint.sh to set up how the app will start on EmbassyOS
+
+8. Replace the icon.jpg with the application logo/icon
+
+9. Edit the README.md to give fellow developers instructions on how to use this wrapper
+
+10. Edit the doc/instructions.md to give users instruction on how to use the app inside of EmbassyOS
+
+11. Edit the assets/compat/config_spec.yaml to set the config fields for the app
+
+12. Edit the assets/compat/config_rules.yaml to set up rules and config dependencies for the app
