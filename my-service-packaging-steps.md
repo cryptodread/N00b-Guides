@@ -133,3 +133,30 @@ Part 2: Clone and Build the project locally, and install on EmbassyOS
 11. Edit the assets/compat/config_spec.yaml to set the config fields for the app
 
 12. Edit the assets/compat/config_rules.yaml to set up rules and config dependencies for the app
+
+13. If setting up a properties page, then you will also need a configurator directory, and a src directory inside of it and a few other things:
+    mkdir configurator
+    mkdir configurator/src
+    touch configurator/src/main.rs
+    touch configurator/.gitignore
+    touch configurator/Cargo.toml
+    ## I think everything else is auto-generated. You will need to edit each file above as follows
+    
+    !Add this to main.rs
+    # TBD - this is where i'm currently stuck
+    ## Add this to .gitignore
+    /target
+    Cargo.lock
+    ## Add this to Cargo.toml
+        [package]
+        name = "configurator"
+        version = "0.1.0"
+        authors = ["Aiden McClelland <me@drbonez.dev>"]
+        edition = "2018"
+        [dependencies]
+        hyper = { version = "0.14.4", features = ["server", "http1", "http2", "tcp", "stream"] }
+        tokio = { version = "1.4.0", features = ["full"] }
+    ## Edit the docker_entrypoint.sh to include the following:
+    configurator
+
+    
