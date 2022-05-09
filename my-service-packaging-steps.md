@@ -42,7 +42,7 @@
     cargo install toml-cli
 
 ## Install avahi client
-    apt install libavahi-client-dev
+    sudo apt install libavahi-client-dev -y
 
 ## Build and install embassy-sdk (0.3.0 branch)
     cd ~/ && git clone -b integration/0.3.0 https://github.com/Start9Labs/embassy-os.git
