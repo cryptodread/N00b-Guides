@@ -44,9 +44,19 @@
 ## Install avahi client
     sudo apt install libavahi-client-dev -y
 
-## Build and install embassy-sdk (0.3.0 branch)
-    cd ~/ && git clone -b integration/0.3.0 https://github.com/Start9Labs/embassy-os.git
-    cd embassy-os/appmgr/
+## Install Node (latest version)
+    sudo snap install node --classic
+
+## Install NPM (latest version)
+    sudo apt install -y npm
+
+## Install jq (latest vesion)
+    sudo apt install -y jq
+
+## Build and install embassy-sdk
+    git clone https://github.com/Start9Labs/embassy-os.git
+    cd embassy-os/
+    git submodule update --init --recursive
     cargo install --path=. --bin=embassy-sdk
 
 ## Now you are ready to build your first EmbassyOS service!
