@@ -1,51 +1,57 @@
-This file gives noob step by step instructions on how to create and deploy a service for EmbassyOS 0.3.0.
+# This file gives noob step by step instructions on how to create and deploy a service for EmbassyOS 0.3.0.
 
-Steps:
+## Steps:
 
-Part 1: Build enviroment
+# Part 1: Build enviroment
 
 
-1. Install docker
-    curl -fsSL https://get.docker.com -o- | bash
+## Install docker (this worked for Pop_OS! 22.04 LTS. your setup may need different commands)
+    sudo apt update
+    sudo apt install  ca-certificates  curl  gnupg  lsb-release
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install docker-ce docker-ce-cli containerd.io -y
+    sudo systemctl status docker
+
+## Set Permissions for docker
     sudo usermod -aG docker "$USER"
     exec sudo su -l $USER
-# UPDATE: had to rebuild docker, and this command didnt work. the following commands did:
-    wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.9~3-0~ubuntu-focal_amd64.deb
-    sudo dpkg -i docker-ce-cli_20.10.9~3-0~ubuntu-focal_amd64.deb
+## Test to make sure docker is working by running hello-world
     sudo docker run hello-world
 
-2. Set buildx as the default builder
+## Set buildx as the default builder
     docker buildx install
     docker buildx create --use
 
-3. Enable cross-arch emulated builds in docker
+## Enable cross-arch emulated builds in docker
     docker run --rm --privileged linuxkit/binfmt:v0.8
 
-4. Install yq
+## Install yq
     sudo snap install yq
 
-5. Install essentials build packages
+## Install essentials build packages
     sudo apt-get install -y build-essential openssl libssl-dev libc6-dev clang libclang-dev ca-certificates
 
-6. Install Rust
+## Install Rust
     curl https://sh.rustup.rs -sSf | sh
     # Choose #1 (default install)
     source $HOME/.cargo/env
 
-7. Install toml
+## Install toml
     cargo install toml-cli
 
-8. Install avahi client
+## Install avahi client
     apt install libavahi-client-dev
 
-9. Build and install embassy-sdk (0.3.0 branch)
+## Build and install embassy-sdk (0.3.0 branch)
     cd ~/ && git clone -b integration/0.3.0 https://github.com/Start9Labs/embassy-os.git
     cd embassy-os/appmgr/
     cargo install --path=. --bin=embassy-sdk
 
-Now you are ready to build your first EmbassyOS service!
+## Now you are ready to build your first EmbassyOS service!
 
-Part 2: Clone and Build the project locally, and install on EmbassyOS
+# Part 2: Clone and Build the project locally, and install on EmbassyOS
 
 10. Clone the project locally. Note the submodule link to the original project(s).
     git clone <URL_of_git_file_from_github>
