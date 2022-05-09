@@ -34,6 +34,8 @@ Run Bitcoind on SSD:
 cd ~/bitcoin
 sudo bitcoind -datadir=$HOME/media/[name_your_ssd]/
 
+## I had to create a bitcoin.conf file in order to run bitcoind correctly
+
 == Blockchain ==
 getbestblockhash
 getblock "blockhash" ( verbosity )
