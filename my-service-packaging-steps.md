@@ -175,4 +175,14 @@
     ## Edit the docker_entrypoint.sh to include the following:
     configurator
 
-    
+   ## you will need this when putting images in the instructions.md
+   https://github.com/Start9Labs/md-packer
+
+   
+ ## for multi arch setups that fail on arm64/v8
+	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+	docker buildx create --name multiarch --driver docker-container --use
+	docker buildx inspect --bootstrap
+
+## Also needed for EOS to build after each reboot
+    docker run --rm --privileged linuxkit/binfmt:v0.8
